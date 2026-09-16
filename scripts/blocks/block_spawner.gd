@@ -67,8 +67,12 @@ func spawn() -> void:
 	block_spawned.emit(block)
 
 
+func can_drop() -> bool:
+	return current != null and current.phase == Block.Phase.MOVING
+
+
 func drop() -> void:
-	if current == null or current.phase != Block.Phase.MOVING:
+	if not can_drop():
 		return
 	current.drop()
 	block_dropped.emit(current)

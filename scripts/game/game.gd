@@ -41,7 +41,9 @@ func _ready() -> void:
 	tower.collapsed.connect(_on_collapsed)
 	water.reached_target.connect(_on_water_reached_milo)
 	spawner.block_spawned.connect(func(block: Block) -> void: milo.look_target = block)
-	spawner.block_dropped.connect(func(_block: Block) -> void: milo.on_block_dropped())
+	spawner.block_dropped.connect(func(_block: Block) -> void:
+		milo.on_block_dropped()
+		Audio.play("drop", 0.95, 1.05))
 	hud.pause_pressed.connect(toggle_pause)
 	pause_menu.resume_pressed.connect(toggle_pause)
 
@@ -55,6 +57,7 @@ func _ready() -> void:
 	pause_menu.visible = false
 	main_menu.visible = true
 
+	Audio.play_music("loop")
 	if GameState.skip_menu:
 		GameState.skip_menu = false
 		start_game()
@@ -99,6 +102,7 @@ func start_game() -> void:
 	hud.visible = true
 	water.rising = true
 	spawner.start()
+	Audio.play("start")
 
 
 func toggle_pause() -> void:
@@ -121,6 +125,8 @@ func game_over(reason: String) -> void:
 	water.rising = false
 	camera.shake_amount = 0.0
 	hud.visible = false
+	Audio.stop_music(1.0)
+	Audio.play("game_over", 1.0, 1.0, -4.0)
 	var is_new_best := GameState.submit_height(height)
 	game_over_screen.show_result(reason, height, GameState.best_height, is_new_best)
 
@@ -138,8 +144,11 @@ func _on_block_placed(block: Block, _overlap: float, rating: Tower.Rating) -> vo
 	hud.set_height(height)
 	var perfect := rating == Tower.Rating.PERFECT
 	milo.climb_onto(block, perfect)
+	# A landing thud always, pitched slightly lower the worse the placement.
+	Audio.play("land", 0.9 if rating >= Tower.Rating.UNSTABLE else 1.0, 1.1)
 	if perfect:
 		hud.popup("PERFECT!", Color(1.0, 0.9, 0.4))
+		Audio.play("perfect")
 	elif rating == Tower.Rating.CRITICAL:
 		camera.kick(5.0)
 	elif rating == Tower.Rating.UNSTABLE:
@@ -149,6 +158,7 @@ func _on_block_placed(block: Block, _overlap: float, rating: Tower.Rating) -> vo
 func _on_block_missed(_block: Block) -> void:
 	milo.on_block_missed()
 	hud.popup("MISS", Color(1.0, 0.5, 0.45))
+	Audio.play("miss")
 
 
 func _on_stability_changed(stability: float) -> void:
@@ -158,6 +168,7 @@ func _on_stability_changed(stability: float) -> void:
 func _on_collapsed() -> void:
 	camera.kick(10.0)
 	milo.fall()
+	Audio.play("collapse")
 	game_over("THE TOWER FELL")
 
 
@@ -165,4 +176,5 @@ func _on_water_reached_milo() -> void:
 	if state != GameState.State.PLAYING:
 		return
 	milo.drown()
+	Audio.play("splash")
 	game_over("MILO GOT WET")
