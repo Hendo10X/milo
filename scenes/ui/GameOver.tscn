@@ -1,0 +1,89 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/game_over.gd" id="1_over"]
+
+[node name="GameOver" type="CanvasLayer"]
+script = ExtResource("1_over")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dim" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="Panel" type="Control" parent="Root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -220.0
+offset_right = 200.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(200, 220)
+mouse_filter = 2
+
+[node name="Reason" type="Label" parent="Root/Panel"]
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 30
+text = "THE TOWER FELL"
+horizontal_alignment = 1
+
+[node name="Height" type="Label" parent="Root/Panel"]
+layout_mode = 0
+offset_top = 60.0
+offset_right = 400.0
+offset_bottom = 170.0
+theme_override_font_sizes/font_size = 88
+text = "0m"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Best" type="Label" parent="Root/Panel"]
+modulate = Color(1, 1, 1, 0.7)
+layout_mode = 0
+offset_top = 180.0
+offset_right = 400.0
+offset_bottom = 210.0
+theme_override_font_sizes/font_size = 24
+text = "BEST 0m"
+horizontal_alignment = 1
+
+[node name="NewBest" type="Label" parent="Root/Panel"]
+modulate = Color(1, 0.9, 0.4, 1)
+layout_mode = 0
+offset_top = 216.0
+offset_right = 400.0
+offset_bottom = 252.0
+theme_override_font_sizes/font_size = 28
+text = "NEW BEST!"
+horizontal_alignment = 1
+
+[node name="Prompt" type="Label" parent="Root/Panel"]
+modulate = Color(1, 1, 1, 0.85)
+layout_mode = 0
+offset_top = 340.0
+offset_right = 400.0
+offset_bottom = 380.0
+theme_override_font_sizes/font_size = 26
+text = "TAP TO TRY AGAIN"
+horizontal_alignment = 1

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/well.gd" id="1_well"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(440, 400)
+
+[node name="Well" type="Node2D"]
+z_index = -10
+script = ExtResource("1_well")
+
+[node name="Ground" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(0, 200)
+
+[node name="Shape" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")

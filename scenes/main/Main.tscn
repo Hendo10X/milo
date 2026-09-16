@@ -1,0 +1,53 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/game.gd" id="1_game"]
+[ext_resource type="PackedScene" path="res://scenes/world/Well.tscn" id="2_well"]
+[ext_resource type="Script" path="res://scripts/world/tower.gd" id="3_tower"]
+[ext_resource type="PackedScene" path="res://scenes/world/Water.tscn" id="4_water"]
+[ext_resource type="Script" path="res://scripts/world/game_camera.gd" id="5_camera"]
+[ext_resource type="PackedScene" path="res://scenes/player/Milo.tscn" id="6_milo"]
+[ext_resource type="Script" path="res://scripts/blocks/block_spawner.gd" id="7_spawner"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="8_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MainMenu.tscn" id="9_menu"]
+[ext_resource type="PackedScene" path="res://scenes/ui/GameOver.tscn" id="10_over"]
+[ext_resource type="PackedScene" path="res://scenes/ui/PauseMenu.tscn" id="11_pause"]
+[ext_resource type="Script" path="res://scripts/game/dev_tools.gd" id="12_dev"]
+
+[node name="Main" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_game")
+
+[node name="World" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Well" parent="World" instance=ExtResource("2_well")]
+
+[node name="Tower" type="Node2D" parent="World"]
+script = ExtResource("3_tower")
+
+[node name="Water" parent="World" instance=ExtResource("4_water")]
+position = Vector2(0, 140)
+
+[node name="Camera2D" type="Camera2D" parent="World"]
+position = Vector2(0, -300)
+script = ExtResource("5_camera")
+
+[node name="Milo" parent="." instance=ExtResource("6_milo")]
+process_mode = 1
+
+[node name="BlockSpawner" type="Node2D" parent="."]
+process_mode = 1
+script = ExtResource("7_spawner")
+
+[node name="UI" type="Node" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("8_hud")]
+
+[node name="MainMenu" parent="UI" instance=ExtResource("9_menu")]
+
+[node name="GameOver" parent="UI" instance=ExtResource("10_over")]
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("11_pause")]
+
+[node name="DevTools" type="Node" parent="."]
+script = ExtResource("12_dev")
